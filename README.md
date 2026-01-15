@@ -914,6 +914,203 @@ console.log("chunkedText", chunkedText);
 console.log("Final answer:", answer);
 ```
 
+## Embeddings Generation
+
+Embeddings Generation ETL automatically creates vector embeddings for your documents, enabling semantic search and AI-powered retrieval capabilities.
+
+#### Path-Based Embeddings Generation
+
+Generate embeddings directly from document field paths:
+
+```javascript
+import { 
+    EmbeddingsGenerationConfiguration,
+    AddEmbeddingsGenerationOperation 
+} from "ravendb";
+
+const config = new EmbeddingsGenerationConfiguration();
+config.name = "Products Embeddings";
+config.collection = "Products";
+config.connectionStringName = "EmbeddedModel";
+config.identifier = config.generateIdentifier();
+
+// Configure which fields to embed
+config.embeddingsPathConfigurations = [
+    {
+        path: "Description",
+        chunkingOptions: {
+            chunkingMethod: "PlainTextSplitParagraphs",
+            maxTokensPerChunk: 256,
+            overlapTokens: 32
+        }
+    },
+    {
+        path: "Details",
+        chunkingOptions: {
+            chunkingMethod: "MarkDownSplitParagraphs",
+            maxTokensPerChunk: 512,
+            overlapTokens: 64
+        }
+    }
+];
+
+// Configure query-time embedding generation
+config.chunkingOptionsForQuerying = {
+    chunkingMethod: "PlainTextSplit",
+    maxTokensPerChunk: 256,
+    overlapTokens: 0
+};
+
+// Set vector quantization (Int8, Single, or Binary)
+config.quantization = "Int8";
+
+// Optional: Customize cache expiration
+config.embeddingsCacheExpiration = 90 * 24 * 60 * 60 * 1000; // 90 days (default)
+config.embeddingsCacheForQueryingExpiration = 14 * 24 * 60 * 60 * 1000; // 14 days (default)
+
+// Add the embeddings generation task
+const result = await store.maintenance.send(
+    new AddEmbeddingsGenerationOperation(config)
+);
+
+console.log(`Task created with ID: ${result.taskId}, Identifier: ${result.identifier}`);
+```
+
+>##### Related tests:
+> <small>[add embeddings generation task with path-based configuration]()</small>
+
+#### Script-Based Embeddings Generation
+
+Use a custom JavaScript transformation for more control:
+
+```javascript
+const config = new EmbeddingsGenerationConfiguration();
+config.name = "Articles Embeddings";
+config.collection = "Articles";
+config.connectionStringName = "OpenAI";
+config.identifier = config.generateIdentifier();
+
+// Define custom transformation script
+config.embeddingsTransformation = {
+    script: `
+        // Combine multiple fields
+        const title = this.Title || "";
+        const body = this.Body || "";
+        const tags = (this.Tags || []).join(", ");
+        
+        const combined = title + "\\n\\n" + body;
+        if (tags) {
+            combined += "\\n\\nTags: " + tags;
+        }
+        
+        // Generate embeddings for the combined text
+        embeddings.generate({
+            text: combined,
+            field: "ContentEmbedding"
+        });
+    `,
+    chunkingOptions: {
+        chunkingMethod: "MarkDownSplitParagraphs",
+        maxTokensPerChunk: 512,
+        overlapTokens: 64
+    }
+};
+
+config.chunkingOptionsForQuerying = {
+    chunkingMethod: "PlainTextSplit",
+    maxTokensPerChunk: 256,
+    overlapTokens: 0
+};
+
+config.quantization = "Single";
+
+const result = await store.maintenance.send(
+    new AddEmbeddingsGenerationOperation(config)
+);
+```
+
+>##### Related tests:
+> <small>[add embeddings generation task with script-based configuration]()</small>
+
+#### Update Embeddings Generation Task
+
+Modify an existing embeddings generation task:
+
+```javascript
+import { UpdateEmbeddingsGenerationOperation } from "ravendb";
+
+// Get the task ID (from the add operation or ongoing tasks)
+const taskId = result.taskId;
+
+// Modify the configuration
+config.quantization = "Binary"; // Change quantization
+config.embeddingsCacheExpiration = 30 * 24 * 60 * 60 * 1000; // 30 days
+
+// Update the task
+const updateResult = await store.maintenance.send(
+    new UpdateEmbeddingsGenerationOperation(taskId, config)
+);
+
+console.log(`Task ${updateResult.taskId} updated successfully`);
+```
+
+>##### Related tests:
+> <small>[update embeddings generation task]()</small>
+
+#### Chunking Methods
+
+Choose the appropriate chunking method based on your content type:
+
+| Method | Best For | Overlap Support |
+|--------|----------|----------------|
+| `PlainTextSplit` | Generic text | ❌ No |
+| `PlainTextSplitLines` | Line-based content | ❌ No |
+| `PlainTextSplitParagraphs` | Plain text documents | ✅ Yes |
+| `MarkDownSplitLines` | Markdown line by line | ❌ No |
+| `MarkDownSplitParagraphs` | Markdown documents | ✅ Yes |
+| `HtmlStrip` | HTML content | ❌ No |
+
+**Overlap Tokens:**
+- Only supported for `PlainTextSplitParagraphs` and `MarkDownSplitParagraphs`
+- Helps maintain context between chunks
+- Must be less than `maxTokensPerChunk`
+
+#### Vector Quantization
+
+Choose a quantization method to balance storage and accuracy:
+
+```javascript
+// High accuracy, larger storage
+config.quantization = "Single"; // 32-bit floating point (default)
+
+// Balanced: Good accuracy, 75% less storage
+config.quantization = "Int8"; // 8-bit integer
+
+// Maximum compression, acceptable accuracy
+config.quantization = "Binary"; // 1-bit binary
+
+// Note: "Text" is not allowed for embeddings
+```
+
+#### Query with Generated Embeddings
+
+Once embeddings are generated, use them for semantic search:
+
+```javascript
+const session = store.openSession();
+
+// Vector search using generated embeddings
+const results = await session
+    .query({ collection: "Products" })
+    .whereEquals("Category", "Electronics")
+    .vectorSearch("Description", "high quality smartphone with long battery life")
+    .all();
+
+// The search query will be automatically embedded and compared
+// against the document embeddings
+console.log(`Found ${results.length} relevant products`);
+```
+
 ## Attachments
 
 #### Store attachments
