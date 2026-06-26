@@ -14,12 +14,16 @@ export type ConnectionStringType =
     | "Olap"
     | "ElasticSearch"
     | "Queue"
+    | "Snowflake"
     | "Ai";
 
 export type QueueBrokerType =
     "None"
     | "Kafka"
-    | "RabbitMq";
+    | "RabbitMq"
+    | "AzureQueueStorage"
+    | "AmazonSqs"
+    | "AzureServiceBus";
 
 export abstract class ConnectionString {
     public name: string;
