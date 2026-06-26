@@ -22,6 +22,8 @@ import { ShardingConventions } from "./ShardingConventions.js";
 import { plural } from "../../ext/pluralize/pluralize.js";
 import { HttpCompressionAlgorithm } from "../../Http/HttpCompressionAlgorithm.js";
 import {RuntimeUtil} from "../../Utility/RuntimeUtil.js";
+import { StringUtil } from "../../Utility/StringUtil.js";
+import { OperationStatusFetchMode } from "../Operations/OperationStatusFetchMode.js";
 
 export type IdConvention = (databaseName: string, entity: object) => Promise<string>;
 export type IValueForQueryConverter<T> =
@@ -107,6 +109,11 @@ export class DocumentConventions {
     private _useHttpDecompression: boolean | null = null;
     private _httpCompressionAlgorithm: HttpCompressionAlgorithm = "Gzip";
 
+    private _useHttpCompression: boolean = true;
+    private _disableTopologyCache: boolean = false;
+    private _topologyCacheLocation: string;
+    private _operationStatusFetchMode: OperationStatusFetchMode = "ChangesApi";
+
     private _sendApplicationIdentifier: boolean;
 
     private readonly _bulkInsert: BulkInsertConventions;
@@ -138,6 +145,47 @@ export class DocumentConventions {
     public set returnPlainJsObjects(value: boolean) {
         this._assertNotFrozen();
         this._returnPlainJsObjects = value;
+    }
+
+    public get useHttpCompression(): boolean {
+        return this._useHttpCompression;
+    }
+
+    public set useHttpCompression(value: boolean) {
+        this._assertNotFrozen();
+        this._useHttpCompression = value;
+    }
+
+    public get disableTopologyCache(): boolean {
+        return this._disableTopologyCache;
+    }
+
+    public set disableTopologyCache(value: boolean) {
+        this._assertNotFrozen();
+        this._disableTopologyCache = value;
+    }
+
+    public get topologyCacheLocation(): string {
+        return this._topologyCacheLocation;
+    }
+
+    public set topologyCacheLocation(value: string) {
+        this._assertNotFrozen();
+
+        if (StringUtil.isNullOrWhitespace(value)) {
+            throwError("InvalidArgumentException", "Topology cache location can't be null or empty.");
+        }
+
+        this._topologyCacheLocation = value;
+    }
+
+    public get operationStatusFetchMode(): OperationStatusFetchMode {
+        return this._operationStatusFetchMode;
+    }
+
+    public set operationStatusFetchMode(value: OperationStatusFetchMode) {
+        this._assertNotFrozen();
+        this._operationStatusFetchMode = value;
     }
 
     public constructor() {
