@@ -2,4 +2,5 @@ import { SchemaValidationCollectionConfiguration } from "./SchemaValidationColle
 
 export interface SchemaValidationConfiguration {
     validatorsPerCollection: { [key: string]: SchemaValidationCollectionConfiguration };
+    disabled?: boolean;
 }
