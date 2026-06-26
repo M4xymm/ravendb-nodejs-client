@@ -12,6 +12,9 @@ import { QueueEtlConfiguration } from "../Etl/Queue/QueueEtlConfiguration.js";
 import { ArchivedDataProcessingBehavior } from "../../DataArchival/ArchivedDataProcessingBehavior.js";
 import { QueueBrokerType } from "../Etl/ConnectionString.js";
 import { QueueSinkConfiguration } from "../QueueSink/QueueSinkConfiguration.js";
+import { SnowflakeEtlConfiguration } from "../Etl/Snowflake/SnowflakeEtlConfiguration.js";
+import { EmbeddingsGenerationConfiguration } from "../AI/EmbeddingsGenerationConfiguration.js";
+import { GenAiConfiguration } from "../AI/GenAiConfiguration.js";
 
 export interface OngoingTask {
     taskId: number;
@@ -22,6 +25,7 @@ export interface OngoingTask {
     taskName: string;
     error: string;
     mentorNode: string;
+    pinToMentorNode: boolean;
 }
 
 export interface OngoingTaskBackup extends OngoingTask {
@@ -120,4 +124,24 @@ export interface OngoingTaskQueueEtl extends OngoingTask {
     connectionStringName: string;
     url: string;
     configuration: QueueEtlConfiguration;
+}
+
+export interface OngoingTaskSnowflakeEtl extends OngoingTask {
+    taskType: "SnowflakeEtl",
+    connectionStringName: string;
+    connectionString: string;
+    configuration: SnowflakeEtlConfiguration;
+}
+
+export interface OngoingTaskEmbeddingsGeneration extends OngoingTask {
+    taskType: "EmbeddingsGeneration",
+    connectionStringName: string;
+    configuration: EmbeddingsGenerationConfiguration;
+}
+
+export interface OngoingTaskGenAi extends OngoingTask {
+    taskType: "GenAi",
+    connectionStringName: string;
+    configuration: GenAiConfiguration;
+    changeVector: string;
 }
