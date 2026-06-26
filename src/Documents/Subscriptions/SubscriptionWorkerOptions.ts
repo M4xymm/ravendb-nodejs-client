@@ -11,4 +11,7 @@ export interface SubscriptionWorkerOptions<T extends object> {
     closeWhenNoDocsLeft?: boolean;
     documentType?: DocumentType<T>;
     workerId?: string;
+    connectionStreamTimeout?: number;
+    sendBufferSizeInBytes?: number;
+    receiveBufferSizeInBytes?: number;
 }
