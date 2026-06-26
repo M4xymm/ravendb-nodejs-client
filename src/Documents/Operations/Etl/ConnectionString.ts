@@ -6,6 +6,9 @@ import { GoogleCloudSettings } from "../Backups/GoogleCloudSettings.js";
 import { FtpSettings } from "../Backups/FtpSettings.js";
 import { KafkaConnectionSettings } from "./Queue/KafkaConnectionSettings.js";
 import { RabbitMqConnectionSettings } from "./Queue/RabbitMqConnectionSettings.js";
+import { AmazonSqsConnectionSettings } from "./Queue/AmazonSqsConnectionSettings.js";
+import { AzureQueueStorageConnectionSettings } from "./Queue/AzureQueueStorageConnectionSettings.js";
+import { AzureServiceBusConnectionSettings } from "./Queue/AzureServiceBusConnectionSettings.js";
 
 export type ConnectionStringType =
     "None"
@@ -89,6 +92,9 @@ export class QueueConnectionString extends ConnectionString {
     public brokerType: QueueBrokerType;
     public kafkaConnectionSettings: KafkaConnectionSettings;
     public rabbitMqConnectionSettings: RabbitMqConnectionSettings;
+    public amazonSqsConnectionSettings?: AmazonSqsConnectionSettings;
+    public azureQueueStorageConnectionSettings?: AzureQueueStorageConnectionSettings;
+    public azureServiceBusConnectionSettings?: AzureServiceBusConnectionSettings;
 
     public type: ConnectionStringType = "Queue";
 }
