@@ -100,5 +100,6 @@ export type EtlType =
     | "Olap"
     | "ElasticSearch"
     | "Queue"
+    | "Snowflake"
     | "GenAi"
     | "EmbeddingsGeneration";
