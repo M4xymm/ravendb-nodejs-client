@@ -9,6 +9,7 @@ import { AdditionalAssembly } from "./AdditionalAssembly.js";
 import { IndexDeploymentMode } from "./IndexDeploymentMode.js";
 import { IndexDefinitionBase } from "./IndexDefinitionBase.js";
 import { ArchivedDataProcessingBehavior } from "../DataArchival/ArchivedDataProcessingBehavior.js";
+import { IndexSchemaDefinitions } from "./IndexSchemaDefinitions.js";
 
 export interface IndexConfiguration {
     [key: string]: string;
@@ -34,6 +35,7 @@ export class IndexDefinition extends IndexDefinitionBase {
     public archivedDataProcessingBehavior: ArchivedDataProcessingBehavior;
     public configuration: IndexConfiguration = {};
     public outputReduceToCollection: string;
+    public schemaDefinitions?: IndexSchemaDefinitions;
     public reduceOutputIndex: number;
     public patternForOutputReduceToCollectionReferences: string;
     public patternReferencesCollectionName: string;
