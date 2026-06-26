@@ -12,6 +12,7 @@ export interface BackupConfiguration {
 
     backupType?: BackupType;
     backupUploadMode?: BackupUploadMode;
+    maxReadOpsPerSecond?: number;
     snapshotSettings?: SnapshotSettings;
     backupEncryptionSettings?: BackupEncryptionSettings;
 
