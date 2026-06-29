@@ -353,10 +353,6 @@ export * from "./Documents/Operations/SchemaValidation/ValidateSchemaResult.js";
 export * from "./Documents/Operations/SchemaValidation/StartSchemaValidationOperation.js";
 export * from "./Documents/Operations/OperationStatusFetchMode.js";
 export * from "./Documents/Operations/Indexes/GetIndexPerformanceStatisticsOperation.js";
-// Note: PostgreSqlConfiguration/PostgreSqlAuthenticationConfiguration/PostgreSqlUser are
-// already exported from ./ServerWide/Operations/Integrations/PostgreSql/*; the new
-// Documents/.../PostgreSQL/PostgreSqlConfiguration.js re-declares the same names, so it is
-// intentionally NOT re-exported here to avoid an ambiguous duplicate export.
 export * from "./Documents/Operations/Integrations/PostgreSQL/ConfigurePostgreSqlOperationResult.js";
 export * from "./Documents/Operations/Integrations/PostgreSQL/ConfigurePostgreSqlOperation.js";
 export * from "./Documents/Operations/CdcSink/CdcColumnType.js";

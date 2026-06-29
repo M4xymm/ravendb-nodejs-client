@@ -7,7 +7,7 @@ import { ServerNode } from "../../../../Http/ServerNode.js";
 import { IRaftCommand } from "../../../../Http/IRaftCommand.js";
 import { RaftIdGenerator } from "../../../../Utility/RaftIdGenerator.js";
 import { throwError } from "../../../../Exceptions/index.js";
-import { PostgreSqlConfiguration } from "./PostgreSqlConfiguration.js";
+import { PostgreSqlConfiguration } from "../../../../ServerWide/Operations/Integrations/PostgreSql/PostgreSqlConfiguration.js";
 import { ConfigurePostgreSqlOperationResult } from "./ConfigurePostgreSqlOperationResult.js";
 
 export class ConfigurePostgreSqlOperation implements IMaintenanceOperation<ConfigurePostgreSqlOperationResult> {
