@@ -308,6 +308,11 @@ export * from "./Documents/Operations/Etl/Queue/EtlQueue.js";
 export * from "./Documents/Operations/Etl/Queue/QueueEtlConfiguration.js";
 export * from "./Documents/Operations/Etl/Queue/KafkaConnectionSettings.js";
 export * from "./Documents/Operations/Etl/Queue/RabbitMqConnectionSettings.js";
+export * from "./Documents/Operations/Etl/Queue/AmazonSqsConnectionSettings.js";
+export * from "./Documents/Operations/Etl/Queue/AzureQueueStorageConnectionSettings.js";
+export * from "./Documents/Operations/Etl/Queue/AzureServiceBusConnectionSettings.js";
+export * from "./Documents/Operations/Etl/Snowflake/SnowflakeConnectionString.js";
+export * from "./Documents/Operations/Etl/Snowflake/SnowflakeEtlConfiguration.js";
 export * from "./Documents/Operations/Etl/ElasticSearch/ElasticSearchIndex.js";
 export * from "./Documents/Operations/Etl/ElasticSearch/ElasticSearchEtlConfiguration.js";
 export * from "./Documents/Operations/Etl/EtlConfiguration.js";
@@ -344,6 +349,42 @@ export * from "./Documents/Operations/SchemaValidation/SchemaValidationCollectio
 export * from "./Documents/Operations/SchemaValidation/ConfigureSchemaValidationOperation.js";
 export * from "./Documents/Operations/SchemaValidation/ConfigureSchemaValidationOperationResult.js";
 export * from "./Documents/Operations/SchemaValidation/GetSchemaValidationConfiguration.js";
+export * from "./Documents/Operations/SchemaValidation/ValidateSchemaResult.js";
+export * from "./Documents/Operations/SchemaValidation/StartSchemaValidationOperation.js";
+export * from "./Documents/Operations/OperationStatusFetchMode.js";
+export * from "./Documents/Operations/Indexes/GetIndexPerformanceStatisticsOperation.js";
+// Note: PostgreSqlConfiguration/PostgreSqlAuthenticationConfiguration/PostgreSqlUser are
+// already exported from ./ServerWide/Operations/Integrations/PostgreSql/*; the new
+// Documents/.../PostgreSQL/PostgreSqlConfiguration.js re-declares the same names, so it is
+// intentionally NOT re-exported here to avoid an ambiguous duplicate export.
+export * from "./Documents/Operations/Integrations/PostgreSQL/ConfigurePostgreSqlOperationResult.js";
+export * from "./Documents/Operations/Integrations/PostgreSQL/ConfigurePostgreSqlOperation.js";
+export * from "./Documents/Operations/CdcSink/CdcColumnType.js";
+export * from "./Documents/Operations/CdcSink/CdcColumnMapping.js";
+export * from "./Documents/Operations/CdcSink/CdcSinkRelationType.js";
+export * from "./Documents/Operations/CdcSink/CdcSinkOnDeleteConfig.js";
+export * from "./Documents/Operations/CdcSink/CdcSinkLinkedTableConfig.js";
+export * from "./Documents/Operations/CdcSink/CdcSinkEmbeddedTableConfig.js";
+export * from "./Documents/Operations/CdcSink/CdcSinkTableConfig.js";
+export * from "./Documents/Operations/CdcSink/CdcSinkPostgresSettings.js";
+export * from "./Documents/Operations/CdcSink/CdcSinkConfiguration.js";
+export * from "./Documents/Operations/CdcSink/CdcSinkConfigurationCompareDifferences.js";
+export * from "./Documents/Operations/CdcSink/CdcSinkProcessState.js";
+export * from "./Documents/Operations/CdcSink/CdcSinkTaskState.js";
+export * from "./Documents/Operations/CdcSink/AddCdcSinkOperation.js";
+export * from "./Documents/Operations/CdcSink/UpdateCdcSinkOperation.js";
+export * from "./Documents/Operations/CdcSink/Schema/CdcSinkSourceColumn.js";
+export * from "./Documents/Operations/CdcSink/Schema/CdcSinkSourceForeignKey.js";
+export * from "./Documents/Operations/CdcSink/Schema/CdcSinkSourceTable.js";
+export * from "./Documents/Operations/CdcSink/Schema/CdcSinkSourceSchema.js";
+export * from "./Documents/Operations/CdcSink/Schema/CdcSinkSchemaRequest.js";
+export * from "./Documents/Operations/CdcSink/Schema/GetCdcSinkSchemaOperation.js";
+export * from "./Documents/Operations/CdcSink/Test/TestCdcSinkOperationType.js";
+export * from "./Documents/Operations/CdcSink/Test/TestCdcSinkRowSelector.js";
+export * from "./Documents/Operations/CdcSink/Test/TestCdcSinkMappingRequest.js";
+export * from "./Documents/Operations/CdcSink/Test/TestCdcSinkRowResult.js";
+export * from "./Documents/Operations/CdcSink/Test/TestCdcSinkMappingResult.js";
+export * from "./Documents/Operations/CdcSink/Test/TestCdcSinkMappingOperation.js";
 
 export * from "./Documents/Operations/ToggleDatabasesStateOperation.js";
 export * from "./Documents/Operations/TransactionsRecording/StartTransactionsRecordingOperation.js";
@@ -414,6 +455,8 @@ export * from "./Documents/Indexes/RollingIndexDeployment.js";
 export * from "./Documents/Indexes/RollingIndexState.js";
 export * from "./Documents/Indexes/IndexStats.js";
 export * from "./Documents/Indexes/IndexSourceType.js";
+export * from "./Documents/Indexes/IndexSchemaDefinitions.js";
+export * from "./Documents/Indexes/IndexPerformanceStats.js";
 export * from "./Documents/Indexes/index.js";
 export * from "./Documents/Indexes/StronglyTyped.js";
 export * from "./Documents/Indexes/IndexDefinitionBase.js";
