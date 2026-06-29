@@ -30,4 +30,11 @@ export type DatabaseRecordItemType =
     | "QueueSinks"
     | "DataArchival"
     | "RemoteAttachments"
-    | "SchemaValidation";
+    | "SchemaValidation"
+    | "SnowflakeConnectionStrings"
+    | "SnowflakeEtls"
+    | "EmbeddingsGenerations"
+    | "AiConnectionStrings"
+    | "GenAiEtls"
+    | "AiAgents"
+    | "CdcSinks";

@@ -5,7 +5,7 @@ import { DatabaseRecordItemType } from "./DatabaseRecordItemType.js";
 export class DatabaseSmugglerOptions implements IDatabaseSmugglerOptions {
     public static readonly DEFAULT_OPERATE_ON_TYPES: DatabaseItemType[] = [
         "Indexes", "Documents", "RevisionDocuments", "Conflicts", "DatabaseRecord", "ReplicationHubCertificates", "Identities",
-        "CompareExchange", "Attachments", "CounterGroups", "Subscriptions", "TimeSeries"
+        "CompareExchange", "Attachments", "CounterGroups", "Subscriptions", "TimeSeries", "TimeSeriesDeletedRanges"
     ];
 
     public static readonly DEFAULT_OPERATE_ON_DATABASE_RECORD_TYPES: DatabaseRecordItemType[] = [
@@ -14,7 +14,10 @@ export class DatabaseSmugglerOptions implements IDatabaseSmugglerOptions {
         "HubPullReplications", "SinkPullReplications", "TimeSeries", "DocumentsCompression",
         "Analyzers", "LockMode", "OlapConnectionStrings", "OlapEtls", "ElasticSearchConnectionStrings",
         "ElasticSearchEtls", "PostgreSqlIntegration", "QueueConnectionStrings", "QueueEtl",
-        "IndexesHistory", "Refresh", "QueueSinks", "DataArchival"
+        "IndexesHistory", "Refresh", "QueueSinks", "DataArchival",
+        "SnowflakeConnectionStrings", "SnowflakeEtls", "EmbeddingsGenerations",
+        "AiConnectionStrings", "GenAiEtls", "AiAgents", "RemoteAttachments",
+        "SchemaValidation", "CdcSinks"
     ];
 
     private static readonly DEFAULT_MAX_STEPS_FOR_TRANSFORM_SCRIPT: number = 10 * 1_000;
@@ -35,6 +38,7 @@ export class DatabaseSmugglerOptions implements IDatabaseSmugglerOptions {
      * In case the database is corrupted (for example, Compression Dictionaries are lost), it is possible to export all the remaining data.
      */
     public skipCorruptedData: boolean;
+    public maxReadOpsPerSecond: number;
 
     constructor() {
         this.operateOnTypes = [...DatabaseSmugglerOptions.DEFAULT_OPERATE_ON_TYPES];
