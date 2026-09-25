@@ -180,6 +180,7 @@ test("rejects bad arguments and a missing token before any request", async () =>
             [["link", "--issue", "RDBC-1128", "--item", "https://github.com/ravendb/ravendb-nodejs-client/pull/1", "--pr", NODE_PR], /Invalid --item/],
             [["merge", "--issue", "RDBC-1128", "--item", TODO_ITEM], /first argument must be link, done or na/],
             [["done", "--issue", "RDBC-1128"], /Required: --issue/],
+            [["na", "--issue", "RDBC-1128", "--item", TODO_ITEM, "--reason", "--dry-run"], /Missing value for --reason/],
         ];
         for (const [args, message] of cases) {
             const err = await checklistFails(server, args);

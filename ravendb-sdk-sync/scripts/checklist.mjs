@@ -64,7 +64,7 @@ function parseArgs(argv) {
         const a = rest[i];
         const next = () => {
             const v = rest[++i];
-            if (v === undefined) fail(`Missing value for ${a}`);
+            if (v === undefined || v.startsWith("--")) fail(`Missing value for ${a}`);
             return v;
         };
         switch (a) {
