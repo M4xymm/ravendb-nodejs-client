@@ -35,12 +35,12 @@ Groups: C# PR number or commit sha10, item URL, C# title, carrier marker, attach
 
 ## Writing to the task
 
-Only through `scripts/checklist.mjs`, run from the Node.js repo root:
+Only through `checklist.mjs`, by its absolute path from Local setup (works from any directory):
 
 ```
-node .claude/skills/ravendb-sdk-sync/scripts/checklist.mjs link --issue <ID|link> --item <item URL> --pr https://github.com/ravendb/ravendb-nodejs-client/pull/<n>
-node .claude/skills/ravendb-sdk-sync/scripts/checklist.mjs done --issue <ID|link> --item <item URL>
-node .claude/skills/ravendb-sdk-sync/scripts/checklist.mjs na   --issue <ID|link> --item <item URL> --reason "<one line, no backticks or square brackets>"
+node C:\Users\maksym.smolinski\WebstormProjects\work\ravendb-nodejs-client\.claude\skills\ravendb-sdk-sync\scripts\checklist.mjs link --issue <ID|link> --item <item URL> --pr https://github.com/ravendb/ravendb-nodejs-client/pull/<n>
+node C:\Users\maksym.smolinski\WebstormProjects\work\ravendb-nodejs-client\.claude\skills\ravendb-sdk-sync\scripts\checklist.mjs done --issue <ID|link> --item <item URL>
+node C:\Users\maksym.smolinski\WebstormProjects\work\ravendb-nodejs-client\.claude\skills\ravendb-sdk-sync\scripts\checklist.mjs na   --issue <ID|link> --item <item URL> --reason "<one line, no backticks or square brackets>"
 ```
 
 - `link`: todo -> in progress. `done`: in progress -> done. `na`: todo -> n/a.

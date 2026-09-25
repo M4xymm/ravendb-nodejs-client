@@ -1,6 +1,6 @@
 # PR description
 
-The PR description follows `.github/pull_request_template.md` of the Node.js repo. Keep every heading and every checkbox of the template; tick the boxes that apply. Write the Description as short bullet points, like the maintainer's recent PRs (for example #596). Write the body to a file and pass it with `gh pr create --body-file`.
+The PR description follows `.github/pull_request_template.md` of the Node.js repo. Keep every heading and every checkbox of the template; tick the boxes that apply. Write the Description as short bullet points, like the maintainer's recent PRs (for example #596). Write the body to `%TEMP%\rdbc-sync\<branch>\pr-body.md` (never inside a worktree or the main checkout) and pass it with `gh pr create --body-file`.
 
 ## How to fill it
 
@@ -12,7 +12,7 @@ The PR description follows `.github/pull_request_template.md` of the Node.js rep
   - tests ported (`RavenDB_<n>.<Test>` -> file) and tests not ported with the reason
   - skipped hunks (server-side files)
   - `Depends on` notes, if any
-  - local checks: prepare, lint, check-exports, check-imports, ported tests (from the port result)
+  - local checks: prepare, lint, check-exports, ported tests, check-imports (from the port result)
   - fork CI: links to the `tests/node` and `tests/bun` runs
   - a final `#### Release notes draft` subsection with the draft from the port result
 - **Type of change**: tick `Sync with the C# client` and replace `(version \`x.y.z\` -> \`x.y.z\`)` with `(no version bump, versions are bumped at release)`.
