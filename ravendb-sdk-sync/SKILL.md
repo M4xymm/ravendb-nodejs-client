@@ -58,7 +58,7 @@ Names used below:
 Check, in order, and stop with a clear message if anything is missing:
 
 1. The session runs in the main checkout from Local setup, and `git remote -v` shows `origin` and `ravendb` as listed.
-2. `gh auth status` succeeds.
+2. `gh auth status` succeeds, and `gh label list -R ravendb/ravendb-nodejs-client --search sdk-sync` lists the `sdk-sync` label (every sync PR gets it; `gh pr create --label` fails on a missing one).
 3. `YOUTRACK_TOKEN` is set (`if ($env:YOUTRACK_TOKEN) { "set" }`; never print the value).
 4. YouTrack MCP tools are available (search for `youtrack` tools; you need `get_issue` and `get_issue_attachments`).
 5. `Raven.Server.exe` exists at the Local setup path.
@@ -149,7 +149,7 @@ For each pushed item, poll both runs with `gh run view <id> -R M4xymm/ravendb-no
 - Both green: write the PR description as in `references/pr-body.md` with the file tool to `pr-body.md` in the item folder, then, as its own gate,
   ```powershell
   $title = (Get-Content -Raw "$env:TEMP\rdbc-sync\<branch>\commit-msg.txt").Trim()
-  gh pr create -R ravendb/ravendb-nodejs-client --base v7.2 --head M4xymm:<branch> --title $title --body-file "$env:TEMP\rdbc-sync\<branch>\pr-body.md"
+  gh pr create -R ravendb/ravendb-nodejs-client --base v7.2 --head M4xymm:<branch> --title $title --body-file "$env:TEMP\rdbc-sync\<branch>\pr-body.md" --label sdk-sync
   ```
   then, as a separate gate, `checklist.mjs link --issue <ISSUE> --item <item URL> --pr <PR URL>`. Status `pr opened`.
 - Any red: status `ci failed` with the run link; no PR; the worktree stays.
