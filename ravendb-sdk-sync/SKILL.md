@@ -50,7 +50,7 @@ Invoke with `/ravendb-sdk-sync <task link>`; the account skill `anthropic-skills
 Names used below:
 
 - `<ISSUE>`: the task ID, e.g. `RDBC-1128`
-- `<branch>`: `<ISSUE>-PR<n>` for PR items, `<ISSUE>-commit<sha10>` for commit items
+- `<branch>`: the ticket ID that starts the item's attachment name, e.g. `RavenDB-22083` for `RavenDB-22083-PR23581.patch` (likewise `RDBDM-154`, `Quill-343`). When that ID is `NO-TICKET`, or another item in the same task has the same ID, use the attachment name without `.patch` (`RavenDB-7070-PR23222`)
 - `<title>`: `<ISSUE> <C# title>` (C# title from the item line without ` (carrier)`); used as commit message and PR title. It is task data: never paste it into a shell string (see 4e)
 
 ## Step 0: setup
@@ -85,15 +85,17 @@ For every todo item, in order, check whether work on it already exists:
 - fork branch: `git ls-remote --heads origin <branch>`
 - upstream PR: `gh pr list -R ravendb/ravendb-nodejs-client --head <branch> --state all --json number,url,state`
 
+Check the old name `<ISSUE>-PR<n>` (`<ISSUE>-commit<sha10>`) the same way; a hit makes the item resumable under that name.
+
 Items with any of these are resumable: they do not count toward N and are listed with their state. Take the first N todo items with none of them. Show:
 
 ```
 Task: RDBC-1128 ("<summary>")   Base: ravendb/v7.2   Limit: 3
 Items:
-  1. PR #23581  RavenDB-22083 Report a proper IndexCompilationException   RavenDB-22083-PR23581.patch   branch RDBC-1128-PR23581
+  1. PR #23581  RavenDB-22083 Report a proper IndexCompilationException   RavenDB-22083-PR23581.patch   branch RavenDB-22083
   2. ...
 Resumable:
-  - PR #23569  branch RDBC-1128-PR23569   pushed to fork, no PR
+  - PR #23569  branch RavenDB-22670   pushed to fork, no PR
 Also found: <n> in progress (open PRs), <n> done, <n> n/a, <n> unknown state
 ```
 
@@ -159,11 +161,11 @@ End every run with this table, one row per item from the plan (including resumab
 ```
 | Item | Branch | CI | PR | Status | Notes |
 |---|---|---|---|---|---|
-| PR #23581 | RDBC-1128-PR23581 | green | #612 | pr opened | 2 tests ported, 1 skipped (server-only) |
+| PR #23581 | RavenDB-22083 | green | #612 | pr opened | 2 tests ported, 1 skipped (server-only) |
 | PR #23238 | - | - | - | n/a | version bump only |
-| PR #23569 | RDBC-1128-PR23569 | red (tests/bun) | - | ci failed | <run link> |
-| PR #22997 | RDBC-1128-PR22997 | - | - | needs clarification | lint fails in unrelated file |
-| PR #23100 | RDBC-1128-PR23100 | - | #598 | merged | ticked, worktree removed |
+| PR #23569 | RavenDB-22670 | red (tests/bun) | - | ci failed | <run link> |
+| PR #22997 | RavenDB-21954 | - | - | needs clarification | lint fails in unrelated file |
+| PR #23100 | RavenDB-7070-PR23100 | - | #598 | merged | ticked, worktree removed |
 ```
 
 Statuses: `pr opened`, `ci failed`, `needs clarification`, `n/a`, `merged`, `closed unmerged`, `skipped`, `skipped (declined)`. Below the table list items in an unknown state, confirmations still pending if Max stopped the run, and worktrees left for inspection. The report is in Polish; the table headers stay in English.
