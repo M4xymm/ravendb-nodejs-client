@@ -26,7 +26,7 @@ Values specific to this machine. When this skill moves to the upstream repo, onl
 - Item folder: `%TEMP%\rdbc-sync\<branch>\` for the patch, the commit message file, the PR body file and the `src/index.ts` backup; never write these inside a worktree or the main checkout
 - Checklist script (`checklist.mjs` below): `node C:\Users\maksym.smolinski\WebstormProjects\work\ravendb-nodejs-client\.claude\skills\ravendb-sdk-sync\scripts\checklist.mjs`
 - Test server: `RAVENDB_TEST_SERVER_PATH=C:\Users\maksym.smolinski\WebstormProjects\work\ravendb-nodejs-client\RavenDB\Server\Raven.Server.exe`
-- Fork CI: `RavenClient.yml` (`tests/node`) and `BunClient.yml` (`tests/bun`), dispatched with `ravendb_version` empty
+- Fork CI: `RavenClient.yml` (`tests/node`) and `BunClient.yml` (`tests/bun`), dispatched with `ravendb_version` set to `""` (two double quotes, the latest server); the input is required, so an empty value is rejected with HTTP 422
 - YouTrack: `https://issues.hibernatingrhinos.com`, token in `YOUTRACK_TOKEN`, YouTrack MCP for reading
 - Talk to Max in Polish; commands for him in PowerShell; code, commits, PR titles and descriptions in English
 - Never use the em dash character; no attribution lines in commits or PRs
@@ -136,8 +136,8 @@ The port skill already ran prepare, lint, check-exports, the ported tests and ch
 - Write `<title>` with the file tool (not a shell command) to `commit-msg.txt` in the item folder, then in the worktree `git add -A` and `git commit -F "$env:TEMP\rdbc-sync\<branch>\commit-msg.txt"`.
 - One gate for the push and both dispatches: `git push -u origin <branch>`, then
   ```
-  gh workflow run RavenClient.yml -R M4xymm/ravendb-nodejs-client --ref <branch> -f ravendb_version=
-  gh workflow run BunClient.yml -R M4xymm/ravendb-nodejs-client --ref <branch> -f ravendb_version=
+  gh workflow run RavenClient.yml -R M4xymm/ravendb-nodejs-client --ref <branch> -f 'ravendb_version=""'
+  gh workflow run BunClient.yml -R M4xymm/ravendb-nodejs-client --ref <branch> -f 'ravendb_version=""'
   ```
 - Find the run IDs: `gh run list -R M4xymm/ravendb-nodejs-client --workflow RavenClient.yml --branch <branch> --event workflow_dispatch --limit 1 --json databaseId,url` (and the same for `BunClient.yml`). A fresh run may not be listed yet: retry a few times over about 30 seconds. An empty list is not a rejection; never dispatch again because of it. If `gh workflow run` itself fails, report it and ask how to run CI.
 - Do not wait; next item.
