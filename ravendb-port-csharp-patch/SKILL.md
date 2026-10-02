@@ -5,8 +5,8 @@ description: >
   in a YouTrack task) into the RavenDB Node.js client inside a given working directory, normally a git
   worktree created by ravendb-sdk-sync. Translates src/Raven.Client changes into idiomatic TypeScript,
   ports the patch's tests, verifies with npm run prepare, lint, check-exports, the ported tests and
-  check-imports, and returns a port result block (changed files, tests, skipped hunks, open questions,
-  release notes draft) for the PR description. Never changes the package version or CLIENT_VERSION. Use it when
+  check-imports, and returns a port result block (changed files, tests, skipped hunks and open questions
+  for the PR description, plus a release notes draft). Never changes the package version or CLIENT_VERSION. Use it when
   ravendb-sdk-sync hands over an item, or when asked to port or apply a RavenDB C# patch in
   ravendb-nodejs-client.
 ---

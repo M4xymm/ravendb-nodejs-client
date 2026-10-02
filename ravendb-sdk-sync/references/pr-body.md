@@ -14,7 +14,7 @@ The PR description follows `.github/pull_request_template.md` of the Node.js rep
   - `Depends on` notes, if any
   - local checks: prepare, lint, check-exports, ported tests, check-imports (from the port result)
   - fork CI: links to the `tests/node` and `tests/bun` runs
-  - a final `#### Release notes draft` subsection with the draft from the port result
+- **No release notes**: the port result's release notes draft never goes into the PR description.
 - **Type of change**: tick `Sync with the C# client` and replace `(version \`x.y.z\` -> \`x.y.z\`)` with `(no version bump, versions are bumped at release)`.
 - **Target branch and backports**: tick `This PR targets the correct release branch` and `No other release branch is affected`.
 - **How risky is the change?**: judge from the diff; one-sentence reason in the Description when it is not Low.
